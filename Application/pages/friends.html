@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <title>好友列表</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    <link rel="icon" href="images/logo.ico">
+
+
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+
+    <link rel="stylesheet" href="../../Public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../Public/css/init.css">
+    <link rel="stylesheet" href="../../Public/css/friends.css">
+    <link rel="stylesheet" href="../../Public/css/search.css">
+    <link rel="stylesheet" href="../../Public/css/sweetalert.css">
+</head>
+<body>
+<!--<div id="page-wrapper">-->
+
+<!-- Header -->
+<header id="header">
+    <h1><a href="#">返回笔记</a></h1>
+    <nav id="nav">
+        <ul>
+            <li><a href="home.html">首页</a></li>
+            <li>
+                <a href="dataRun.html" >数据</a>
+            </li>
+            <li><a href="competitionAll.html">竞赛</a></li>
+            <li><a href="moments.html">圈子</a></li>
+            <li><a href="market.html">商城</a></li>
+            <li>
+                <a href="#" class="icon fa-angle-down">个人中心</a>
+                <ul>
+                    <li style="white-space: nowrap"><a href="userInfo.html">修改信息</a></li>
+                    <li style="white-space: nowrap"><a href="index.html" onclick="logout()">登出</a></li>
+
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+
+
+
+<div class="container" >
+    <div class="row">
+        <div class=" col-xs-10 col-sm-10  col-md-6  col-lg-6 col-md-offset-3  col-lg-offset-3 col-xs-offset-1  " >
+
+            <ul class="nav nav-tabs" role="tablist" >
+                <li role="presentation" ><a href="moments.html">朋友圈</a></li>
+                <li role="presentation" class="active" ><a href="friends.html">好友</a></li>
+                <li role="presentation" ><a href="fans.html">粉丝</a></li>
+                <li role="presentation" ><a href="search.html">查找</a></li>
+            </ul>
+
+
+            <div class="row" id="re-local"></div>
+
+
+            <!--<nav id="paging">-->
+            <!--<ul class="pagination">-->
+            <!--<li><a href="#">&laquo;</a></li>-->
+            <!--<li><a href="#">1</a></li>-->
+            <!--<li><a href="#">2</a></li>-->
+            <!--<li><a href="#">&raquo;</a></li>-->
+            <!--</ul>-->
+            <!--</nav>-->
+
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<!-- Footer -->
+<footer id="footer">
+    <ul class="icons">
+        <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        <li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+        <li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+        <li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+    </ul>
+    <ul class="copyright">
+        <li>&copy; JiayiWu. All rights reserved.</li><li> <a href="http://218.94.159.99/">南京大学软件学院2016[面向Web计算]课程项目</a></li>
+    </ul>
+</footer>
+
+<!--</div>-->
+
+<!-- Scripts -->
+<script src="../../Public/js/jquery.min.js"></script>
+<script src="../../Public/js/bootstrap.min.js"></script>
+<script src="../../Public/js/echarts.common.min.js"></script>
+<script src="../../Public/js/jquery.dropotron.min.js"></script>
+<script src="../../Public/js/jquery.scrollgress.min.js"></script>
+<script src="../../Public/js/skel.min.js"></script>
+<script src="../../Public/js/util.js"></script>
+<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="../../Public/js/main.js"></script>
+<script src="../../Public/js/jquery.tmpl.min.js"></script>
+<script src="../../Public/js/sweetalert.min.js"></script>
+<script src="../../Public/js/friendsJs.js"></script>
+<script>
+    $(function () {
+        friendsList();
+    });
+    function friendsList() {
+        var result =
+            "<div class='col-xs-12 col-sm-12 col-md-5  col-lg-5 list-friend media-list-base' > " + "<p  style='visibility: hidden'>${id}</p>"+
+            "<ul > <li class='media'> <a class='media-left media-middle' href='#'>" +
+            " <img src='./others/dp/${imgid}.png' class='img-base' alt='dp'>" +
+            " </a> <div class='media-body'> <h4 class='media-heading'>${name}</h4>" +
+            " <button type='button' class='btn ${button_module} button-base ' id='${id}' lastmodel ='${model}' model='${model}'>${choice}</button><br/> </div> </li> </ul> ";
+        jQuery.ajax({
+            url: 'friends',
+            type: 'post',
+            cache: false,
+            success: function(data) {
+                if(data.state == true){
+                    $("div").remove(".media-list-base");
+                    var object = data.object;
+                    if(object!=null){
+                        var pointElement = $("#re-local")
+                        for (var i = 0;i<object.length;i++){
+                            mainPanelMade(object[i].id,object[i].username,0,pointElement,result);
+                        }
+                        var btns = $('.button-base');
+                        for (var i = 0; i < btns.length; ++i) {
+                            $(btns[i]).attr("model",0);
+                            btns[i].onclick = function () {
+                                buttonEvent($(this).attr('id'));
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+</script>
+
+<script>
+
+    function logout() {
+        jQuery.ajax({
+            url: 'user/logout',
+            cache: false
+        })
+    }
+</script>
+
+</body>
+</html>

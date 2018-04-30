@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+    <title>记录</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    <link rel="icon" href="images/logo.ico">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+
+    <link rel="stylesheet" href="../../Public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../Public/css/init.css">
+    <link rel="stylesheet" href="../../Public/css/friends.css">
+    <link rel="stylesheet" href="../../Public/css/search.css">
+    <link rel="stylesheet" href="../../Public/css/sweetalert.css">
+
+</head>
+<body>
+<!-- Header -->
+<header id="header">
+    <h1><a href="#">返回笔记</a></h1>
+    <nav id="nav">
+        <ul>
+            <li><a href="home.html">首页</a></li>
+            <li>
+                <a href="dataRun.html" >数据</a>
+            </li>
+            <li><a href="competitionAll.html">竞赛</a></li>
+            <li><a href="moments.html">圈子</a></li>
+            <li><a href="market.html">商城</a></li>
+            <li>
+                <a href="#" class="icon fa-angle-down">个人中心</a>
+                <ul>
+                    <li style="white-space: nowrap"><a href="userInfo.html">修改信息</a></li>
+                    <li style="white-space: nowrap"><a href="index.html" onclick="logout()">登出</a></li>
+
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<!--wangEditor是一款基于jquery框架开发的插件-->
+<script src="http://cdn.bootcss.com/wangeditor/2.1.20/js/lib/jquery-2.2.1.js"></script>
+    <div class="container" >
+        <div class="col-md-4" id="mainControl">
+            <h2>最近笔记</h2>
+                <div class="col-xs-10 col-sm-10 col-md-10  col-lg-10 col-xs-offset-1  col-sm-offset-1 col-md-offset-1  col-lg-offset-1  media-list-base" id="loading">还没有笔记~</div>
+        </div>
+        <div class="col-md-8">
+            <h2 id="title" style="display: inline">笔记名</h2>
+                <ul class="icons" style="float: right">
+                    <li><a href="#" class="icon fa-tags" data-toggle="tooltip"
+                           data-placement="bottom" title="标签" id="label"><span class="label">标签</span></a></li>
+                    <li><a href="#" class="icon fa-folder" data-toggle="tooltip"
+                           data-placement="bottom" title="笔记本"><span class="label">笔记本</span></a></li>
+                    <li><a href="#" class="icon fa-save"data-toggle="tooltip"
+                           data-placement="bottom" title="保存"><span class="label">保存</span></a></li>
+                    <li><a href="#" class="icon fa-trash"data-toggle="tooltip"
+                           data-placement="bottom" title="删除"><span class="label">删除</span></a></li>
+                    <li><a href="#" class="icon fa-share"data-toggle="tooltip"
+                           data-placement="bottom" title="分享"><span class="label">分享</span></a></li>
+                </ul>
+            <div style="max-width:1000px;margin:10px">-->
+            <div id="txtdiv" style="border:1px solid gray;min-height:480px">
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!--脚本控制-->
+    <script>
+        $(function(){
+            //初始化编辑器
+            editor = new wangEditor("txtdiv");
+            editor.create();
+            //内容修改事件，此处做的是实时展示实际效果
+            editor.onchange = function(){
+                //获取editor的html值
+                var html = editor.$txt.html();
+                alert(editor.$txt.text())
+                $("#show_box").html(html)
+            }
+
+            init();
+        })
+
+    </script>
+
+    <!--按照官网上的说明，js和css的这两个引用应该放在body的末尾-->
+    <script src="http://cdn.bootcss.com/wangeditor/2.1.20/js/wangEditor.js"></script>
+    <link href="http://cdn.bootcss.com/wangeditor/2.1.20/css/wangEditor.css" rel="stylesheet">
+</body>
+</html>

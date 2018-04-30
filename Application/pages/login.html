@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>登陆</title>
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+
+
+    <link rel="icon" href="images/logo.ico">
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+
+    <!--<link rel="stylesheet" href="assets/css/main.css" />-->
+    <link rel="stylesheet" href="../../Public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../Public/css/init.css">
+    <link rel="stylesheet" href="../../Public/css/LRcommon.css">
+    <link rel="stylesheet" href="../../Public/css/search.css">
+</head>
+<body>
+<header id="header">
+    <h1><a href="#">Runner</a></h1>
+    <nav id="nav">
+        <ul>
+            <li><a href="home.html">首页</a></li>
+            <li>
+                <a href="sign_up.html" >注册</a>
+            </li>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+    <div class="container">
+        <div class="row  top-padding bottom-padding ">
+            <div class="page-header  text-center">
+                <h3>登录</h3>
+            </div>
+        </div>
+
+        <form id="form">
+            <div class="row top-padding bottom-padding ">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-sm-offset-2 col-md-offset-3 col-lg-offset-4">
+                    <input type="text" name="userName" class="form-control" placeholder="邮箱/用户名" id="username">
+                </div>
+            </div>
+
+            <div class="row top-padding bottom-padding">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-sm-offset-2 col-md-offset-3 col-lg-offset-4">
+                    <input type="password" name="password" class="form-control" placeholder="密码" id="password">
+                </div>
+            </div>
+
+            <div class="row top-padding bottom-padding ">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-sm-offset-2 col-md-offset-3 col-lg-offset-4">
+                    <button type="button" class="btn btn-primary btn-block" id="login">登录</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="row top-padding bottom-padding">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-sm-offset-2 col-md-offset-3 col-lg-offset-4">
+                <div class="text-center">
+                    <a href="../../PhpstormProjects/Notebook/pages/findpw.html">忘记密码？</a>
+                    <br/>
+                    <p>还没有账号？去<a href="sign_up.html">注册</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <ul class="copyright">
+            <li><a href="#">&copy; MengyangDuan.</a> All rights reserved.</li>
+            <li> <a href="http://218.94.159.99/">南京大学软件学院2017[面向Web计算]课程项目</a></li>
+        </ul>
+    </footer>
+
+    <!--</div>-->
+
+    <!-- Scripts -->
+    <script src="../../Public/js/jquery.min.js"></script>
+    <script src ="../../Public/js/bootstrap.min.js"></script>
+    <script src="../../Public/js/jquery.dropotron.min.js"></script>
+    <script src="../../Public/js/jquery.scrollgress.min.js"></script>
+    <script src="../../Public/js/skel.min.js"></script>
+    <script src="../../Public/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="../../Public/js/main.js"></script>
+    <script src="../../Public/js/jquery.md5.js"></script>
+
+    <script>
+
+        $('form').on('keypress', function(e) {
+            if (e.which == 13) {
+                login();
+            }
+        });
+        $('#login').on('click', function () {
+            login();
+        });
+
+        function login(){
+            var result = new Object();
+            result.userName = $('#username').val();
+            result.password = $.md5($('#password').val());
+            if($('#username').val()=="admin"&&$('#password').val()=="admin"){
+                top.location = '../adminMessage.html';
+            }
+            if ($(form).find('.error').length == 0 && $('#password').val().trim() != '') {
+                jQuery.ajax({
+                    url: '/user/login',
+                    type: 'post',
+                    dataType: 'json',
+                    data: result,
+                    success: function (data) {
+                        if (data.state == true) {
+                            top.location = '../writenote.html';
+                        }else{
+                            $('#password').val("");
+                            alert(data.message);
+                        }
+                    }
+                });
+            }
+
+        }
+    </script>
+    <script src="../../Public/js/logout.js"></script>
+</body>
+</html>

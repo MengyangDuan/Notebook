@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <title>基本信息</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    <link rel="stylesheet" href="../../Public/css/competitionAll.css">
+    <link rel="stylesheet" href="../../Public/css/blockTitleAndText.css">
+    <link rel="stylesheet" href="../../Public/css/search.css">
+    <link rel="stylesheet" href="../assets/css/userInfo.css">
+    <link rel="icon" href="images/logo.ico">
+
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+
+    <link rel="stylesheet" href="../../Public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../Public/css/init.css">
+    <link rel="stylesheet" href="../../Public/css/sweetalert.css">
+
+</head>
+<body>
+<!--<div id="page-wrapper">-->
+
+<!-- Header -->
+<header id="header">
+    <h1><a href="#">Runner</a></h1>
+    <nav id="nav">
+        <ul>
+            <li><a href="home.html">首页</a></li>
+            <li>
+                <a href="dataRun.html" >返回笔记</a>
+            </li>
+            <li><a href="moments.html">朋友圈</a></li>
+            <li>
+                <a href="#" class="icon fa-angle-down">个人中心</a>
+                <ul>
+                    <li style="white-space: nowrap"><a href="userInfo.html">基本信息</a></li>
+                    <li style="white-space: nowrap"><a href="userInfo.html">我的好友</a></li>
+                    <li style="white-space: nowrap"><a href="index.html" onclick="logout()">退出登录</a></li>
+
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+
+
+
+
+<div class="container" >
+    <div class="col-md-5">
+        <h2>Main Content Section</h2>
+    </div>
+    <div class="col-md-7">
+        <h2>Sidebar</h2>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer id="footer">
+    <ul class="copyright">
+        <li><a href="#">&copy; MengyangDuan.</a> All rights reserved.</li>
+        <li> <a href="http://218.94.159.99/">南京大学软件学院2017[面向Web计算]课程项目</a></li>
+    </ul>
+</footer>
+
+<!--</div>-->
+
+<!-- Scripts -->
+<script src="../../Public/js/jquery.min.js"></script>
+<script src="../../Public/js/bootstrap.min.js"></script>
+<script src="../../Public/js/echarts.common.min.js"></script>
+<script src="../../Public/js/jquery.dropotron.min.js"></script>
+<script src="../../Public/js/jquery.scrollgress.min.js"></script>
+<script src="../../Public/js/skel.min.js"></script>
+<script src="../../Public/js/util.js"></script>
+<!--[if lte IE 8]><script src="../../Public/js/ie/respond.min.js"></script><![endif]-->
+<script src="../../Public/js/main.js"></script>
+<script src="../../Public/js/sweetalert.min.js"></script>
+<script>
+    $(function () {
+        init();
+
+        $('#create-btn').on('click', function () {
+            updateEvent();
+        });
+    });
+
+
+    function init() {
+        jQuery.ajax({
+            url: 'user/basicinfo',
+            cache: false,
+            success: function(data) {
+                if(data.state == true){
+                    var object = data.object;
+                    $('#username').val(object.nickname);
+                    $('#height').val(object.height);
+                    $('#weight').val(object.weight);
+                    if(object.sex != null && object.sex==1){
+                        $('#check1').attr("checked",null);
+                        $('#check2').attr("checked","checked");
+                    }
+                    $('#content').val(object.slogan);
+
+                }
+            }
+        })
+    }
+
+    function updateEvent() {
+        var sex = 0;
+        if($('input:radio:checked').val()=='woman'){
+            sex = 1;
+        }
+        jQuery.ajax({
+            url: 'user/update/info',
+            type:"post",
+            data:{
+                nickname:$('#username').val(),
+                height:	$('#height').val(),
+                weight:	$('#weight').val(),
+                sex:sex,
+                slogan:$('#content').val()
+            },
+            cache: false,
+            success: function(data) {
+                if(data.state == true){
+                    swal("成功", "您的个人信息修改成功!", "success");
+                    init();
+
+                }else {
+                    swal("错误", "信息修改失败,请稍后再试!", "error");
+                }
+            }
+        })
+    }
+
+</script>
+
+<script>
+
+    function logout() {
+        jQuery.ajax({
+            url: 'user/logout',
+            cache: false
+        })
+    }
+</script>
+</body>
+</html>

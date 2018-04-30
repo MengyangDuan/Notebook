@@ -1,0 +1,24 @@
+[ 2017-12-07T15:23:39+08:00 ] 127.0.0.1 /Notebook/Notebook/index.php?_ijt=hqnvdvvvgkci7kv51ndn0550e0
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000020s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001544s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000598s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000645s ]
+
+[ 2017-12-07T15:28:12+08:00 ] 127.0.0.1 /Notebook/Notebook/index.php?_ijt=kac402vm0ue4mmrtpqu9em49m8
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000017s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000934s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000783s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000837s ]
+
+[ 2017-12-07T19:02:23+08:00 ] 127.0.0.1 /Notebook/Notebook/index.php?_ijt=m48ogbqcmmcdmvokfhb5j8u0tq
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001046s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001006s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001061s ]
+

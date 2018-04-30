@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <title>基本信息</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    <link rel="stylesheet" href="../../Public/css/competitionAll.css">
+    <link rel="stylesheet" href="../../Public/css/blockTitleAndText.css">
+    <link rel="stylesheet" href="../../Public/css/search.css">
+    <link rel="stylesheet" href="../../Public/css/userinfo.css">
+    <link rel="icon" href="images/logo.ico">
+
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+
+    <link rel="stylesheet" href="../../Public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../Public/css/init.css">
+    <link rel="stylesheet" href="../../Public/css/sweetalert.css">
+
+</head>
+<body>
+<!--<div id="page-wrapper">-->
+
+<!-- Header -->
+<header id="header">
+    <h1><a href="#">Runner</a></h1>
+    <nav id="nav">
+        <ul>
+            <li><a href="home.html">首页</a></li>
+            <li>
+                <a href="dataRun.html" >返回笔记</a>
+            </li>
+            <li><a href="moments.html">朋友圈</a></li>
+            <li>
+                <a href="#" class="icon fa-angle-down">个人中心</a>
+                <ul>
+                    <li style="white-space: nowrap"><a href="userinfo.html">基本信息</a></li>
+                    <li style="white-space: nowrap"><a href="userinfo.html">我的好友</a></li>
+                    <li style="white-space: nowrap"><a href="index.html" onclick="logout()">退出登录</a></li>
+
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+
+
+
+
+<div class="container" >
+    <div class="row">
+        <div class=" col-xs-10 col-sm-10  col-md-6  col-lg-6 col-md-offset-3  col-lg-offset-3 col-xs-offset-1  " >
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation"  class="active"><a href="userInfo.html"> 基本信息</a></li>
+                <li role="presentation" ><a href="usersecurity.html">账号安全</a></li>
+
+            </ul>
+
+
+            <div class="row">
+                <div class=" col-xs-12 col-sm-10  col-md-10  col-lg-10 media-list-base " id="point">
+                    <p>基本信息</p>
+                    <div id="userInfo">
+                        <img src="../../Public/images/userPhoto.png" id="userImage">
+                        <div >
+                            <p id="focus" style="display: inline">关注人数:30</p>
+                            <p id="fans">粉丝:100</p>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon" >用户名</span>
+                        <input type="text" class="form-control" placeholder="Username" id="username">
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon" >邮箱</span>
+                        <input type="email" class="form-control" placeholder="email" id="email">
+                    </div>
+
+                    <div id="button-group">
+                        <button type="button" class="btn btn-primary btn-block create-base btn-base" id="create-btn">保存</button>
+                        <button type="button" class="btn btn-default btn-block create-base btn-base" id="create-cancle">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<!-- Footer -->
+<footer id="footer">
+    <ul class="copyright">
+        <li><a href="#">&copy; MengyangDuan.</a> All rights reserved.</li>
+        <li> <a href="http://218.94.159.99/">南京大学软件学院2017[面向Web计算]课程项目</a></li>
+    </ul>
+</footer>
+
+<!--</div>-->
+
+<!-- Scripts -->
+<script src="../../Public/js/jquery.min.js"></script>
+<script src="../../Public/js/bootstrap.min.js"></script>
+<script src="../../Public/js/echarts.common.min.js"></script>
+<script src="../../Public/js/jquery.dropotron.min.js"></script>
+<script src="../../Public/js/jquery.scrollgress.min.js"></script>
+<script src="../../Public/js/skel.min.js"></script>
+<script src="../../Public/js/util.js"></script>
+<!--[if lte IE 8]><script src="../../Public/js/ie/respond.min.js"></script><![endif]-->
+<script src="../../Public/js/main.js"></script>
+<script src="../../Public/js/sweetalert.min.js"></script>
+<script>
+    $(function () {
+        init();
+        $('#create-btn').on('click', function () {
+            updateEvent();
+        });
+    });
+
+
+    function init() {
+        jQuery.ajax({
+            url: 'user/basicInfo',
+            cache: false,
+            success: function(data) {
+                if(data.state == true){
+                    var object = data.object;
+                    $('#username').val(object.username);
+                    $('#email').val(object.email);
+                }
+            }
+        })
+    }
+
+    function updateEvent() {
+        jQuery.ajax({
+            url: 'user/modifyBasicinfo',
+            type:"post",
+            data:{
+                username:$('#username').val(),
+                email:	$('#email').val(),
+            },
+            cache: false,
+            success: function(data) {
+                if(data.state == true){
+                    swal("成功", "您的个人信息修改成功!", "success");
+                    init();
+                }else {
+                    swal("错误", "信息修改失败,请稍后再试!", "error");
+                }
+            }
+        })
+    }
+
+</script>
+
+<script>
+
+    function logout() {
+        jQuery.ajax({
+            url: 'user/logout',
+            cache: false
+        })
+    }
+</script>
+</body>
+</html>
